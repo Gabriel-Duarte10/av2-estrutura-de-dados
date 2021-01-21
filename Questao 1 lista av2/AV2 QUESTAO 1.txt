@@ -1,0 +1,273 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAXTAM 1000
+int Frente, Tras, Lista[MAXTAM];
+void Lista_Construtor()
+{
+    Frente=0;
+    Tras=-1;
+
+}
+int Lista_Vazia()
+{
+    if(Tras==-1)
+        return 1;
+    else
+        return 0;
+
+}
+int Lista_Cheia()
+{
+    if(Tras==MAXTAM-1)
+        return 1;
+    else
+        return 0;
+
+}
+int Lista_Tamanho()
+{
+    return Tras+1;
+
+}
+int Lista_Inserir_Inicio(int Valor)
+{
+    if(Lista_Cheia())
+    {
+        return 0;
+
+    }
+    else
+    {
+        for(int i=Tras+1; i>Frente; i--)
+        {
+            Lista[i]=Lista[i-1];
+
+        }
+        Lista[Frente]=Valor;
+        Tras++;
+        return 1;
+
+    }
+
+}
+int Lista_Inserir_Fim(int Valor)
+{
+    if(Lista_Cheia())
+    {
+        return 0;
+
+    }
+    else
+    {
+        Tras++;
+        Lista[Tras]=Valor;
+        return 1;
+
+    }
+}
+int Lista_Inserir(int Valor, int Posicao)
+{
+    if(Lista_Cheia())
+    {
+        return 0;
+
+    }
+    else
+    {
+        if(Posicao>Frente && Posicao<Tras)
+        {
+            for(int i=Tras+1; i>Posicao; i--)
+            {
+                Lista[i]=Lista[i-1];
+
+            }
+            Lista[Posicao]=Valor;
+            Tras++;
+            return 1;
+
+        }
+        else
+        {
+            return 0;
+
+        }
+
+    }
+
+}
+int Lista_Remover_Inicio(int *Valor)
+{
+    if(Lista_Vazia())
+    {
+        return 0;
+
+    }
+    else
+    {
+        *Valor =Lista[Frente];
+        for(int i=Frente; i<Tras; i++)
+        {
+            Lista[i]=Lista[i+1];
+
+        }
+        Tras--;
+
+    }
+
+}
+int Lista_Remover_Fim(int *Valor)
+{
+    if(Lista_Vazia())
+    {
+        return 0;
+
+    }
+    else
+    {
+        *Valor=Lista[Tras];
+        Tras--;
+        return 1;
+
+    }
+
+}
+int Lista_Remover(int *Valor, int Posicao)
+{
+    if(Lista_Vazia())
+    {
+        return 0;
+
+    }
+    else
+    {
+        if(Posicao>Frente && Posicao<Tras)
+        {
+            *Valor=Lista[Posicao];
+            for(int i=Posicao; i<Tras; i++)
+            {
+                Lista[i]=Lista[i+1];
+
+            }
+            Tras--;
+            return 1;
+
+        }
+
+    }
+
+}
+int Lista_Get_Inicio(int *Valor)
+{
+    if(Lista_Vazia())
+    {
+        return 0;
+
+    }
+    else
+    {
+        *Valor=Lista[Frente];
+        return 1;
+
+    }
+
+}
+int Lista_Get_Fim(int *Valor)
+{
+    if(Lista_Vazia())
+    {
+        return 0;
+
+    }
+    else
+    {
+        *Valor=Lista[Tras];
+        return 1;
+
+    }
+
+}
+int Lista_Busca_Valor(int Valor, int *Posicao)
+{
+    int i;
+    if(Lista_Vazia())
+    {
+        return 0;
+
+    }
+    else
+    {
+        for(i=Frente; i<Tras; i++)
+        {
+            if(Lista[i]==Valor)
+            {
+                break;
+
+            }
+
+        }
+        if(i==Tras)
+        {
+            return 0;
+
+        }
+        else
+        {
+            *Posicao=i;
+            return 1;
+
+        }
+
+    }
+
+}
+int Lista_Busca_Posicao(int *Valor, int Posicao)
+{
+    if(Lista_Vazia())
+    {
+        return 0;
+
+    }
+    else
+    {
+        if(Posicao>Frente && Posicao<Tras)
+        {
+            *Valor=Lista[Posicao];
+            return 1;
+
+        }
+        else
+        {
+            return 0;
+
+        }
+
+    }
+
+}
+int main()
+{
+int i,Valor;
+Lista_Construtor();
+    Lista_Inserir_Fim(5);
+    Lista_Inserir_Inicio(10);
+    Lista_Inserir_Fim(7);
+    Lista_Inserir(20,1);
+    //10,20,5,7
+    for(i=0; i<Lista_Tamanho(); i++)
+    {
+        printf("%d ",Lista[i]);
+
+    }
+    Lista_Remover_Inicio(&Valor);
+    //20,5,7
+    printf("\n\n O valor %d foi removido \n\n",Valor);
+    for(i=0; i<Lista_Tamanho(); i++)
+    {
+        printf("%d ",Lista[i]);
+
+    }
+    printf("\n\n");
+    system ("pause");
+    return 0;
+
+}
